@@ -1,0 +1,7 @@
+{
+    "port": { "env": "JWT_USER_SERVICE_PORT", "default": 8080 },
+    "admin": {
+        "username": { "env": "JWT_USER_SERVICE_ADMIN_USERNAME", "default": "admin" },
+        "password": { "env": "JWT_USER_SERVICE_ADMIN_PASSWORD", "default": "changeit" }
+    }
+}
