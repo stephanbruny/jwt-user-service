@@ -40,4 +40,15 @@ describe('User module', () => {
         assert(eitherUser.isLeft());
     });
 
+    it('should update a users data', async () => {
+        const user = await User(await storage({}), mockCrypt);
+        const testUser = await user.create('test', 'test', { foo: 'bar' });
+        assert(testUser.isRight())
+        assert.equal(testUser.right().foo, 'bar');
+        await user.modify('test', { foo: 'foobar' });
+        const userAfter = await user.login('test', 'test');
+        assert(userAfter.isRight());
+        assert.equal(userAfter.right().foo, 'foobar');
+    });
+
 });
