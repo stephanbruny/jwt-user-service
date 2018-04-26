@@ -1,6 +1,6 @@
 const assert = require('assert');
 const Storage = require('../lib/storage');
-const LokiDriver = require('../lib/database/fs');
+const DbDriver = require('../lib/database/fs');
 const fs = require('fs');
 
 
@@ -8,7 +8,7 @@ describe("Storage Module", () => {
 
     const testDbFile = __dirname + '/data/test.db';
 
-    const getDb = async () => Storage(LokiDriver)({ filename: testDbFile, collection: 'user' });
+    const getDb = async () => Storage(DbDriver)({ filename: testDbFile, collection: 'user' });
 
     it('should initialize API', async () => {
         const db = await getDb();
