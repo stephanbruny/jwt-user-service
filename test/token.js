@@ -3,7 +3,7 @@ const Jwt = require('../lib/jwt');
 const Token = require('../lib/token');
 const assert = require('assert');
 const Storage = require('../lib/storage');
-const MockDriver = require('./mock-db');
+const MockDriver = require('../lib/database/fs');
 
 describe('Token module', () => {
 

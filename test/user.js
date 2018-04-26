@@ -1,7 +1,7 @@
 const User = require('../lib/user');
 const assert = require('assert');
 const Storage = require('../lib/storage');
-const MockDriver = require('./mock-db');
+const MockDriver = require('../lib/database/fs');
 
 describe('User module', () => {
 
