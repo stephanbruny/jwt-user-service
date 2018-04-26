@@ -1,7 +1,18 @@
 {
-    "port": { "env": "JWT_USER_SERVICE_PORT", "default": 8080 },
+    "server": {
+        "port": { "env": "JWT_USER_SERVICE_PORT", "default": 8080 }
+    },
     "admin": {
         "username": { "env": "JWT_USER_SERVICE_ADMIN_USERNAME", "default": "admin" },
         "password": { "env": "JWT_USER_SERVICE_ADMIN_PASSWORD", "default": "changeit" }
+    },
+    "jwt": {
+        "secret": { "env": "JWT_USER_SERVICE_JWT_SECRET", "default": "change it" },
+        "expire": { "env": "JWT_USER_SERVICE_JWT_EXPIRE", "default": 3600 },
+        "privateKey": { "env": "JWT_USER_SERVICE_JWT_PRIVATE_KEY", "default": null },
+        "publicKey": { "env": "JWT_USER_SERVICE_JWT_PUBLIC_KEY", "default": null }
+    },
+    "storage": {
+        "filename": { "env": "JWT_USER_SERVICE_JWT_SECRET", "default": "./app-data/users.db" }
     }
 }
