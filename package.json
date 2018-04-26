@@ -23,6 +23,7 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
+    "mocha": "^5.1.1",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5"
   }
