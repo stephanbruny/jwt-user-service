@@ -9,7 +9,6 @@ const Jwt = require('./lib/jwt');
 const Token = require('./lib/token');
 const Server = require('./lib/server');
 const Controller = require('./lib/controller');
-const FsDriver = require('./lib/database/fs');
 
 const getConfigValue = configObject => {
     if (configObject) {
@@ -41,7 +40,8 @@ const crypt = {
 
 const startService = async (serviceConfig) => {
     const jwt = Jwt(serviceConfig.jwt);
-    const store = await Storage(FsDriver)(serviceConfig.storage);
+    const driver = module.require(serviceConfig['storage-driver']);
+    const store = await Storage(driver)(serviceConfig.storage);
     const user = User(store, crypt);
     const token = Token(user, jwt);
     const controller = Controller(user, token);

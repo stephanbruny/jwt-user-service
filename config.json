@@ -12,7 +12,8 @@
         "privateKey": { "env": "JWT_USER_SERVICE_JWT_PRIVATE_KEY", "default": null },
         "publicKey": { "env": "JWT_USER_SERVICE_JWT_PUBLIC_KEY", "default": null }
     },
+    "storage-driver": { "env": "JWT_USER_SERVICE_STORAGE_DRIVER", "default": "./lib/database/fs" },
     "storage": {
-        "filename": { "env": "JWT_USER_SERVICE_JWT_SECRET", "default": "./app-data/users.db" }
+        "filename": { "env": "JWT_USER_SERVICE_STORAGE_FILENAME", "default": "./app-data/users.db" }
     }
 }
