@@ -95,3 +95,62 @@ You might need to provide a custom configuration file to access your database.
 
 
 ## Password encryption
+
+Of course, passwords shall never be stored as plain text.  
+Therefor, this service provides a simple hash module, to encrypt user passwords.  
+If you use an existing database (with your own storage driver), you may already have encrypted passwords.  
+To enable the login-feature you'll need the same encryption-algorithm to match a user's credentials.  
+In that case, providing a custom encryption module is necessary.
+
+Encryption module API: 
+
+```js
+module.exports = function CustomCryptModule(config /* from config.crypt */) {
+    return {
+        encode: dataString => {
+            // Encrypt data (don't forget to salt)
+            return encryptedDataString;
+        }
+    }
+}
+```
+
+## Custom Configuration
+
+The service configuration consists of an object containing sub-objects for each service module.
+
+Minimal configuration:
+
+```js
+{
+    "server": {
+        "port": 8080
+    },
+    "jwt": {
+        "expire": 3600,
+        "secret": "<some secret>",
+        /* OR */
+        "privateKey": "-----BEGIN RSA PRIVATE KEY........",
+        "publicKey": "-----BEGIN RSA PUBLIC KEY........"
+    },
+    "storage-driver": "path/to/driver.module.js",
+    "storage": {
+        /* your custom driver configuration */
+    },
+    "crypt-module": "path/to/encryption.module.js",
+    "crypt": {
+        /* your custom encryption module configuration */
+    }
+}
+```
+
+### Configuration with environment variables
+
+As mentioned before, you should make use of the environment, instead of "hard-coding" configuration values.  
+Having a file on a server which includes keys, salts or secrets is always a security-issue.  
+To make use of variables inside your configuration file, use the following object-signature:
+
+`"configuration-key": { "env": "ENVIRONMENT_VARIABLE_NAME", "default": "some default value for testing" }`
+
+**HINT**
+Instead of a JSON-formatted configuration file, you can also provide a Node.JS-module, which exports a configuration object.
