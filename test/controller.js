@@ -48,7 +48,7 @@ describe('Controller Module', () => {
         const token = await controller.post['/token']({}, { username: 'foo', password: 'bar' });
         assert(token.isRight());
         const data = jwt.verify(token.right());
-        assert.equal(data.address, 'home');
+        assert.equal(data.userData.address, 'home');
     });
 
 });

@@ -22,7 +22,7 @@ describe('User module', () => {
         const user = await User(await storage({}), mockCrypt);
         const testUser = await user.create('test', 'test', { foo: 'bar' });
         assert(testUser.isRight())
-        assert.equal(testUser.right().foo, 'bar');
+        assert.equal(testUser.right().userData.foo, 'bar');
     });
 
     it('should login/verify a user by credentials', async () => {
@@ -30,7 +30,7 @@ describe('User module', () => {
         await user.create('foo', 'foobar', { foo: 'bar' });
         const testUser = await user.login('foo', 'foobar');
         assert(testUser.isRight());
-        assert.equal(testUser.right().foo, 'bar');
+        assert.equal(testUser.right().userData.foo, 'bar');
     });
 
     it('should fail with invalid credentials', async () => {
@@ -44,11 +44,11 @@ describe('User module', () => {
         const user = await User(await storage({}), mockCrypt);
         const testUser = await user.create('test', 'test', { foo: 'bar' });
         assert(testUser.isRight())
-        assert.equal(testUser.right().foo, 'bar');
+        assert.equal(testUser.right().userData.foo, 'bar');
         await user.modify('test', { foo: 'foobar' });
         const userAfter = await user.login('test', 'test');
         assert(userAfter.isRight());
-        assert.equal(userAfter.right().foo, 'foobar');
+        assert.equal(userAfter.right().userData.foo, 'foobar');
     });
 
 });

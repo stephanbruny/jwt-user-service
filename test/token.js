@@ -32,7 +32,7 @@ describe('Token module', () => {
         assert(tokenString.isRight());
 
         const decoded = jwt.verify(tokenString.right());
-        assert.equal(decoded.address, 'foosen 123');
+        assert.equal(decoded.userData.address, 'foosen 123');
         assert.equal(decoded.id, 'test');
     });
 
@@ -45,7 +45,7 @@ describe('Token module', () => {
         const decoded = token.decode(tokenString.right());
         assert(decoded.isRight());
         const userDecoded = decoded.right();
-        assert.equal(userDecoded.address, 'foosen 123');
+        assert.equal(userDecoded.userData.address, 'foosen 123');
         assert.equal(userDecoded.id, 'test');
     });
 
