@@ -1,6 +1,6 @@
 {
   "name": "jwt-user-service",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A simple REST-based user authorization service",
   "main": "index.js",
   "scripts": {
