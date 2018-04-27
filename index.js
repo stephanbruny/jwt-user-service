@@ -7,22 +7,7 @@ const Jwt = require('./lib/jwt');
 const Token = require('./lib/token');
 const Server = require('./lib/server');
 const Controller = require('./lib/controller');
-
-const getConfigValue = configObject => {
-    if (configObject) {
-        if(configObject.env) {
-            return process.env[configObject.env] || configObject.default;
-        }
-        if (typeof configObject === 'object') {
-            let result = {};
-            Object.keys(configObject).forEach(key => {
-                result[key] = getConfigValue(configObject[key]);
-            })
-            return result;
-        }
-    }
-    return configObject;
-}
+const Config = require('./lib/config');
 
 const config = require('./config.json');
 
@@ -37,6 +22,6 @@ const startService = async (serviceConfig) => {
     return Server(serviceConfig.server)(controller);
 }
 
-startService(getConfigValue(config))
+startService(Config(config))
     .then(() => console.log("jwt-user-service running"))
     .catch(err => console.error(err));
