@@ -9,10 +9,15 @@
   "keywords": [
     "user",
     "authentication",
-    "service"
+    "service",
+    "jwt"
   ],
   "author": "Stephan Bruny <mail@stephan-bruny.de>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephanbruny/jwt-user-service.git"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "deepmerge": "^2.1.0",
