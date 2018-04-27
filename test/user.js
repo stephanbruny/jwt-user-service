@@ -65,4 +65,18 @@ describe('User module', () => {
         assert(loginAfterCorrect.isRight());
     });
 
+    it('should NOT change a users password if type is not string', async () => {
+        const user = await User(await storage({}), mockCrypt);
+        const testUser = await user.create('test', 'test', { foo: 'bar' });
+        assert(testUser.isRight())
+        const login = await user.login('test', 'test');
+        assert(login.isRight());
+        const changed = await user.changePassword('test', { foo: 'BAR' });
+        assert(changed.isLeft());
+        const changed2 = await user.changePassword('test', 1234);
+        assert(changed2.isLeft());
+        const changed3 = await user.changePassword('test', null);
+        assert(changed3.isLeft());
+    });
+
 });

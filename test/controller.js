@@ -51,4 +51,18 @@ describe('Controller Module', () => {
         assert.equal(data.userData.address, 'home');
     });
 
+    it('should change a users password from put request', async () => {
+        const controller = await init();
+        const created = await controller.post['/']({}, { username: 'foo', password: 'bar' });
+        assert(created.isRight());
+        const res = await controller.post['/token']({}, { username: 'foo', password: 'bar' });
+        assert(res.isRight())
+        const changed = await controller.put['/:userId/password']({ userId: 'foo' }, 'changedpw');
+        assert(changed.isRight());
+        const resAfter = await controller.post['/token']({}, { username: 'foo', password: 'bar' });
+        assert(resAfter.isLeft());
+        const resAfterCorrect = await controller.post['/token']({}, { username: 'foo', password: 'changedpw' });
+        assert(resAfterCorrect.isRight());
+    });
+
 });
