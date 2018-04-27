@@ -51,4 +51,18 @@ describe('User module', () => {
         assert.equal(userAfter.right().userData.foo, 'foobar');
     });
 
+    it('should change a users password', async () => {
+        const user = await User(await storage({}), mockCrypt);
+        const testUser = await user.create('test', 'test', { foo: 'bar' });
+        assert(testUser.isRight())
+        const login = await user.login('test', 'test');
+        assert(login.isRight());
+        const changed = await user.changePassword('test', 'foo1bar');
+        assert(changed.isRight());
+        const loginAfter = await user.login('test', 'test');
+        assert(loginAfter.isLeft());
+        const loginAfterCorrect = await user.login('test', 'foo1bar');
+        assert(loginAfterCorrect.isRight());
+    });
+
 });
