@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-const crypto = require('crypto');
-
 const { Maybe } = require('monet');
 
 const Storage = require('./lib/storage');
@@ -28,21 +26,12 @@ const getConfigValue = configObject => {
 
 const config = require('./config.json');
 
-// TODO: Salt
-const crypt = {
-    encode: data => {
-        const hash = crypto.createHash('sha256');
-        hash.update(data);
-        return hash.digest('base64');
-    },
-    decode: () => {}
-}
-
 const startService = async (serviceConfig) => {
     const jwt = Jwt(serviceConfig.jwt);
+    const crypt = module.require(serviceConfig['crypt-module']);
     const driver = module.require(serviceConfig['storage-driver']);
     const store = await Storage(driver)(serviceConfig.storage);
-    const user = User(store, crypt);
+    const user = User(store, crypt(serviceConfig.crypt));
     const token = Token(user, jwt);
     const controller = Controller(user, token);
     return Server(serviceConfig.server)(controller);

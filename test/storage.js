@@ -51,4 +51,19 @@ describe("Storage Module", () => {
         const bar = await db.get('bar');
         assert.deepEqual(bar, testData[1]);
     });
+
+    it('should NOT insert a new document with duplicated id', async () => {
+        const db = await Storage(MockDriver)({});
+        const testData = {
+            id: 'foosen',
+            foo: 'bar',
+            x: 42
+        }
+        await db.create(testData);
+        try {
+            await db.create({ id: 'foosen', bar: 'foo' });
+        } catch (ex) {
+            assert.equal(ex.constructor.name, 'StorageError');
+        }
+    });
 });

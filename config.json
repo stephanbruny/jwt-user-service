@@ -15,5 +15,9 @@
     "storage-driver": { "env": "JWT_USER_SERVICE_STORAGE_DRIVER", "default": "./lib/database/fs" },
     "storage": {
         "filename": { "env": "JWT_USER_SERVICE_STORAGE_FILENAME", "default": "./app-data/users.db" }
+    },
+    "crypt-module": { "env": "JWT_USER_SERVICE_CRYPT_MODULE", "default": "./lib/crypt" },
+    "crypt": {
+        "salt": { "env": "JWT_USER_SERVICE_CRYPT_SALT", "default": "change this, too" }
     }
 }
