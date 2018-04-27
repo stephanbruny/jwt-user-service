@@ -62,4 +62,36 @@ There are no command line arguments currently.
 
 ## Storage Driver
 
+You can (and propably should) provide a custom storage driver for persitence.  
+The driver is meant to be an interface for your database, filesystem or some other web-based service.  
+It should be simple to implement a storage driver for MySQL, MongoDB or whatever IO-device you choose.  
+
+A storage driver is a Node.JS-Module with a specific API:
+
+```js
+module.exports = async function CustomStorageDriver(config /* from config.storage */) {
+    // Initialize database / persitence layer....
+
+    return {
+        insert: async data => {
+            // db.insert(data)...
+            return data; // simply return the inserted data
+        },
+        findOne: async id => /* find entry by id in database */,
+        update: async (id, changes) => {
+            // find entry by id and update
+            return entry; // return the modified entry
+        },
+        remove: async id => {
+            // remove entry by id
+            // return nothing
+        }
+    }
+}
+```
+
+The storage driver is supposed to throw exceptions on errors.  
+You might need to provide a custom configuration file to access your database.  
+
+
 ## Password encryption

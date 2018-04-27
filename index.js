@@ -9,7 +9,12 @@ const Server = require('./lib/server');
 const Controller = require('./lib/controller');
 const Config = require('./lib/config');
 
-const config = require('./config.json');
+const getConfigJson = () => {
+    if (process.env['JWT_USER_SERVICE_CONFIG_FILE']) {
+        return module.require(process.env['JWT_USER_SERVICE_CONFIG_FILE']);
+    }
+    return module.require('./config.json');
+}
 
 const startService = async (serviceConfig) => {
     const jwt = Jwt(serviceConfig.jwt);
@@ -22,6 +27,6 @@ const startService = async (serviceConfig) => {
     return Server(serviceConfig.server)(controller);
 }
 
-startService(Config(config))
+startService(Config(getConfigJson()))
     .then(() => console.log("jwt-user-service running"))
     .catch(err => console.error(err));
